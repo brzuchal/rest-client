@@ -1,0 +1,49 @@
+{
+  "name": "brzuchal/rest-client",
+  "description": "A new synchronous HTTP REST client offering a fluent API with the infrastructure of Symfony HttpClient",
+  "license": "MIT",
+  "require": {
+    "symfony/http-client": "^6.3",
+    "symfony/property-access": "^6.3",
+    "symfony/serializer": "^6.3"
+  },
+  "suggest": {
+    "laminas/laminas-code": "Enable client generation from interfaces",
+    "symfony/mime": "Enable support for serialization of various media types"
+  },
+  "conflict": {
+    "laminas/laminas-code": "<4",
+    "laravel/framework": "<10",
+    "symfony/mime": "<6.3",
+    "symfony/framework-bundle": "<6.3"
+  },
+  "require-dev": {
+    "laminas/laminas-code": "^4",
+    "laravel/framework": "^10",
+    "symfony/mime": "^6.3",
+    "symfony/validator": "^6.3",
+    "symfony/framework-bundle": "^6.3",
+    "orchestra/testbench": "^8",
+    "phpunit/phpunit": "^10",
+    "phpstan/phpstan": "^1",
+    "vimeo/psalm": "^5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Brzuchal\\RestClient\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Brzuchal\\RestClient\\Tests\\": "tests/"
+    }
+  },
+  "type": "symfony-bundle",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Brzuchal\\RestClient\\RestClientServiceProvider"
+      ]
+    }
+  }
+}

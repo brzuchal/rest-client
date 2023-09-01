@@ -1,0 +1,11 @@
+---
+title: Laravel Integration
+description: Integrating RestClient with Laravel application
+weight: 10
+---
+= Laravel Integration
+
+This guide explains process of installation and the basic configuration for
+Laravel application.
+
+TBD.
