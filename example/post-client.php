@@ -28,10 +28,10 @@ final class Post
     #[Groups(['create', 'update', 'view'])]
     public function __construct(
         #[Assert\Positive]
-        public int $userId,
+        public int $userId = 121,
         #[Assert\NotBlank]
-        public string $title,
-        public string $body,
+        public string $title = 'Custom title',
+        public string $body = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         #[Groups(['update', 'view'])]
         public readonly int|null $id = null,
     ) {

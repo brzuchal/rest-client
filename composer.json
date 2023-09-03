@@ -5,7 +5,8 @@
   "require": {
     "symfony/http-client": "^6.3",
     "symfony/property-access": "^6.3",
-    "symfony/serializer": "^6.3"
+    "symfony/serializer": "^6.3",
+    "psr/log": "^1|^2|^3"
   },
   "suggest": {
     "laminas/laminas-code": "Enable client generation from interfaces",

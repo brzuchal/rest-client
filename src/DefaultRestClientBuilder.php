@@ -2,6 +2,12 @@
 
 namespace Brzuchal\RestClient;
 
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -13,15 +19,36 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 final class DefaultRestClientBuilder implements RestClientBuilderInterface
 {
     public function __construct(
-        private HttpClientInterface $httpClient,
-        private SerializerInterface $serializer,
+        private readonly HttpClientInterface|null $httpClient = null,
+        private readonly SerializerInterface|null $serializer = null,
+        private string|null $baseUrl = null,
+        private array|null $defaultUriVariables = null,
         private array $defaultHeaders = [],
         private array $defaultContext = [],
     ) {
     }
 
     /** @inheritdoc */
-    public function defaultHeaders(array $headers): self
+    public function baseUrl(string $url): static
+    {
+        $this->baseUrl = $url;
+
+        return $this;
+    }
+
+    /** @inheritdoc */
+    public function defaultUriVariables(array $uriVariables): static
+    {
+        $this->defaultUriVariables ??= [];
+        foreach ($uriVariables as $name => $value) {
+            $this->defaultUriVariables[$name] = $value;
+        }
+
+        return $this;
+    }
+
+    /** @inheritdoc */
+    public function defaultHeaders(array $headers): static
     {
         foreach ($headers as $name => $values) {
             $name = strtolower($name);
@@ -33,7 +60,7 @@ final class DefaultRestClientBuilder implements RestClientBuilderInterface
     }
 
     /** @inheritdoc */
-    public function defaultHeader(string $name, mixed $value): self
+    public function defaultHeader(string $name, mixed $value): static
     {
         $name = strtolower($name);
         $this->defaultHeaders[$name] ??= [];
@@ -43,7 +70,7 @@ final class DefaultRestClientBuilder implements RestClientBuilderInterface
     }
 
     /** @inheritdoc */
-    public function defaultContext(array $context): self
+    public function defaultContext(array $context): static
     {
         foreach ($context as $name => $value) {
             $this->defaultContext[$name] = $value;
@@ -55,10 +82,23 @@ final class DefaultRestClientBuilder implements RestClientBuilderInterface
     public function build(): RestClientInterface
     {
         return new DefaultRestClient(
-            $this->httpClient,
-            $this->serializer,
+            $this->httpClient ?? HttpClient::create(),
+            $this->serializer ?? self::createDefaultSerializer(),
+            $this->baseUrl,
+            $this->defaultUriVariables,
             $this->defaultHeaders,
             $this->defaultContext,
         );
+    }
+
+    protected static function createDefaultSerializer(): Serializer
+    {
+        return new Serializer([
+            new ArrayDenormalizer(),
+            new DateTimeNormalizer(),
+            new ObjectNormalizer(),
+        ], [
+            new JsonEncoder(),
+        ]);
     }
 }

@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Posts;
+namespace App\PostsBuilder;
 
 use Brzuchal\RestClient\RestClient;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -17,7 +18,11 @@ class Post
     }
 }
 
-$restClient = RestClient::create('https://jsonplaceholder.typicode.com/');
+$restClient = RestClient::builder()
+    ->baseUrl('https://jsonplaceholder.typicode.com/')
+    ->defaultContext([DateTimeNormalizer::FORMAT_KEY => 'Y-m-d H:i:s'])
+    ->defaultHeader('Authorisation', 'Bearer YWxhbWFrb3Rh')
+    ->build();
 
 // create post
 $created = $restClient->post('/posts/')
@@ -27,7 +32,7 @@ $created = $restClient->post('/posts/')
 var_dump($created);
 
 // modify post
-$created->title = 'Changed title';
+$created->body = 'Changed body';
 $updated = $restClient->put('/posts/{id}', ['id' => 1])
     ->body($created)
     ->retrieve()

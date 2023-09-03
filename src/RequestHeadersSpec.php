@@ -4,7 +4,6 @@ namespace Brzuchal\RestClient;
 
 use Closure;
 use DateTimeInterface;
-use Symfony\Component\HttpClient\Response\CurlResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -40,7 +39,7 @@ class RequestHeadersSpec
      * @param array|null $uriVariables
      * @return $this
      */
-    public function uri(string|null $uri = null, array|null $uriVariables = null): self
+    public function uri(string|null $uri = null, array|null $uriVariables = null): static
     {
         $this->uriFactory = UriFactory::create($uri, $uriVariables);
 
@@ -54,7 +53,7 @@ class RequestHeadersSpec
      * @param Closure():string $closure
      * @return $this
      */
-    public function uriFactory(Closure $closure): self
+    public function uriFactory(Closure $closure): static
     {
         $this->uriFactory = new UriFactory($closure);
 
@@ -67,7 +66,7 @@ class RequestHeadersSpec
      *
      * @return $this
      */
-    public function accept(string... $acceptableMediaTypes): self
+    public function accept(string... $acceptableMediaTypes): static
     {
         $this->headers['accept'] = $acceptableMediaTypes;
 
@@ -80,7 +79,7 @@ class RequestHeadersSpec
      *
      * @return $this
      */
-    public function acceptCharset(string... $acceptableCharsets): self
+    public function acceptCharset(string... $acceptableCharsets): static
     {
         $this->headers['accept-charset'] = $acceptableCharsets;
 
@@ -94,7 +93,7 @@ class RequestHeadersSpec
      *
      * @return $this
      */
-    public function ifModifiedSince(DateTimeInterface $ifModifiedSince): self
+    public function ifModifiedSince(DateTimeInterface $ifModifiedSince): static
     {
         $this->headers['if-modified-since'] = $ifModifiedSince->format(DateTimeInterface::RFC7231);
 
@@ -106,7 +105,7 @@ class RequestHeadersSpec
      *
      * @return $this
      */
-    public function ifNoneMatch(string... $ifNoneMatches): self
+    public function ifNoneMatch(string... $ifNoneMatches): static
     {
         $this->headers['if-modified-since'] = '"'. implode('", "', $ifNoneMatches) . '"';
 
@@ -120,7 +119,7 @@ class RequestHeadersSpec
      * @param string ...$values
      * @return $this
      */
-    public function header(string $name, string... $values): self
+    public function header(string $name, string... $values): static
     {
         $this->headers[$name] ??= [];
         $this->headers[$name] += $values;

@@ -2,12 +2,6 @@
 
 namespace Brzuchal\RestClient;
 
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
-use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -24,30 +18,15 @@ final class RestClient
         HttpClientInterface|null $httpClient = null,
         SerializerInterface|null $serializer = null,
     ): RestClientInterface {
-        return new DefaultRestClient(
-            $httpClient ?? HttpClient::createForBaseUri($baseUri),
-            $serializer ?? self::createDefaultSerializer(),
-        );
+        return self::builder($httpClient, $serializer)
+            ->baseUrl($baseUri)
+            ->build();
     }
 
     public static function builder(
         HttpClientInterface|null $httpClient = null,
         SerializerInterface|null $serializer = null,
     ): RestClientBuilderInterface {
-        return new DefaultRestClientBuilder(
-            $httpClient ?? HttpClient::create(),
-            $serializer ?? self::createDefaultSerializer(),
-        );
-    }
-
-    protected static function createDefaultSerializer(): Serializer
-    {
-        return new Serializer([
-            new ArrayDenormalizer(),
-            new DateTimeNormalizer(),
-            new ObjectNormalizer(),
-        ], [
-            new JsonEncoder(),
-        ]);
+        return new DefaultRestClientBuilder($httpClient, $serializer);
     }
 }

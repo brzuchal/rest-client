@@ -21,10 +21,12 @@ use ReflectionAttribute;
 use ReflectionException;
 
 /**
- * A {@link RestClientInterface} service factory. Service creation
+ * Generating {@link RestClientInterface} service factory. Service creation
  * generates given interface implementing class and returns a new instance.
  *
  * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
+ *
+ * @experimental
  */
 final class RestClientFactory
 {

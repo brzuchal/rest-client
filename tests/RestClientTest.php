@@ -29,7 +29,7 @@ JSON;
 
             return new MockResponse(self::SINGLE_TODO);
         });
-        $restClient = RestClient::create('http://example.com', $client);
+        $restClient = RestClient::create('https://example.com', $client);
         $restClient->get('/todos')
             ->retrieve()
             ->toArray();
@@ -46,7 +46,7 @@ JSON;
                 'response_headers' => ['content-type' => self::CONTENT_TYPE_JSON],
             ]);
         });
-        $restClient = RestClient::create('http://example.com', $client);
+        $restClient = RestClient::create('https://example.com/', $client);
         $todo = $restClient->get('/todos')
             ->retrieve()
             ->toEntity(Todo::class);
