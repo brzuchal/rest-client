@@ -160,8 +160,7 @@ Use the `exchange(ExchangeInterface $exchange)` method to set a custom exchange 
 ```php
 $customExchange = new CustomExchange();
 $response = $client->get('/todos/1')
-    ->exchange($customExchange) // Set a custom exchange
-    ->retrieve();
+    ->exchange($customExchange);
 ```
 
 ### Setting Request Content Type

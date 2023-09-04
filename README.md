@@ -16,6 +16,7 @@ composer require brzuchal/rest-client-bundle
 
 * [RestClient Builder](doc/builder.md)
 * [Using Entity Classes](doc/entity.md)
+* [Custom Response Handling](doc/exchange.md)
 * [Integrating with Symfony](doc/symfony.md)
 * [Integrating with Laravel](doc/laravel.md)
 * [Client Service Factory (Experimental)](doc/service-factory.md)
