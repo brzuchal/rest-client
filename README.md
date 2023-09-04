@@ -9,7 +9,7 @@ Whether you're building web services or powerful API clients in your application
 You can install the RestClient package via Composer:
 
 ```shell
-composer require brzuchal/rest-client-bundle
+composer require brzuchal/rest-client
 ```
 
 ## Documentation
