@@ -27,11 +27,8 @@ To get started with the RestClient package, create a `RestClient` instance. You 
 
 ```php
 use Brzuchal\RestClient\RestClient;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-$baseUri = 'https://api.example.com/';
-$httpClient = HttpClientInterface::class;
-$restClient = RestClient::create($baseUri, $httpClient);
+$client = RestClient::create('https://api.example.com/');
 ```
 
 Now you have a `RestClient` instance ready to make HTTP requests.
@@ -40,34 +37,9 @@ Now you have a `RestClient` instance ready to make HTTP requests.
 
 The RestClient package allows you to create various types of HTTP requests, such as GET, POST, PUT, DELETE, etc. You can use the RestClient instance to create request objects for these methods.
 
-### GET Request
-
 ```php
-$getRequest = $restClient->get('/todos/1');
-```
-
-### POST Request
-
-```php
-$postRequest = $restClient->post('/todos');
-```
-
-### PUT Request
-
-```php
-$putRequest = $restClient->put('/todos/1');
-```
-
-### DELETE Request
-
-```php
-$deleteRequest = $restClient->delete('/todos/1');
-```
-
-### Handling Responses
-
-```php
-$response = $getRequest->retrieve();
+$response = $client->get('/todos/1')
+    ->retrieve();
 $data = $response->toArray();
 $todo = $response->toEntity(Todo::class);
 ```
@@ -75,7 +47,8 @@ $todo = $response->toEntity(Todo::class);
 ## Error Handling
 
 ```php
-$response = $restClient->get('/todos/1')->retrieve();
+$response = $client->get('/todos/1')
+    ->retrieve();
 
 $response->onStatus(404, function ($response) {
     throw new NotFoundException('Resource not found');
@@ -123,19 +96,17 @@ Here's an example Symfony controller that uses the RestClient package to make AP
 ```php
 use Brzuchal\RestClient\RestClient;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class TodoController extends AbstractController
 {
-    public function index(HttpClientInterface $httpClient): JsonResponse
-    {
-        $restClient = RestClient::create('https://jsonplaceholder.typicode.com', $httpClient);
-
-        $response = $restClient->get('/todos');
-        $data = $response->toArray();
-
-        return $this->json($data);
+    public function index(
+        #[Autowire(service: 'rest_client.default')]
+        RestClientInterface $client,
+    ): JsonResponse {
+        return $this->json($client->get('/todos')->toArray());
     }
 }
 ```
@@ -186,12 +157,9 @@ class TodoController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
-        $restClient = RestClient::create('https://jsonplaceholder.typicode.com', Http::class);
-
-        $response = $restClient->get('/todos');
-        $data = $response->toArray();
-
-        return response()->json($data);
+        return response()->json(
+            app('rest_client.default')->get('/todos')->toArray(),
+        );
     }
 }
 ```
