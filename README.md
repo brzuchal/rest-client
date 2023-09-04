@@ -14,12 +14,13 @@ composer require brzuchal/rest-client
 
 ## Documentation
 
-* [RestClient Builder](doc/builder.md)
-* [Using Entity Classes](doc/entity.md)
-* [Custom Response Handling](doc/exchange.md)
+* [Basic usage](doc/basic.md)
+* [Builder](doc/builder.md)
+* [Entity Classes](doc/entity.md)
+* [Custom Handling](doc/exchange.md)
 * [Integrating with Symfony](doc/symfony.md)
 * [Integrating with Laravel](doc/laravel.md)
-* [Client Service Factory (Experimental)](doc/service-factory.md)
+* [Service Factory (Experimental)](doc/service-factory.md)
 
 ## Getting Started
 
