@@ -12,6 +12,14 @@ You can install the RestClient package via Composer:
 composer require brzuchal/rest-client-bundle
 ```
 
+## Documentation
+
+* [RestClient Builder](doc/builder.md)
+* [Using Entity Classes](doc/entity.md)
+* [Integrating with Symfony](doc/symfony.md)
+* [Integrating with Laravel](doc/laravel.md)
+* [Client Service Factory (Experimental)](doc/service-factory.md)
+
 ## Getting Started
 
 To get started with the RestClient package, create a `RestClient` instance. You can use the `RestClient::create` method to do this:

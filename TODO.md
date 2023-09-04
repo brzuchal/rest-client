@@ -1,12 +1,11 @@
-## TODO
+# TODO
 
-## URI generation
-* evaluate the need for `UriFactory`, eventually propose a `Closure():string`
+## URI Generation
+* Evaluate the need for `UriFactory` and eventually propose a `Closure():string` for URI generation.
 
-### Error handlers
-
-* the  `DefaultResponseExchange` should wrap `$response` interaction into try-catch if no errorHandler registered
-* default error handlers were added but then removed it is to consider whether they should be in place or not allowing the underlying HTTP client to throw.
+## Error Handlers
+* Modify the `DefaultResponseExchange` to wrap `$response` interactions into a try-catch block if no error handler is registered.
+* Consider whether default error handlers should be implemented or not, allowing the underlying HTTP client to throw exceptions.
 
 ```php
 $this->errorHandlers = $errorHandlers ?? [
@@ -16,12 +15,32 @@ $this->errorHandlers = $errorHandlers ?? [
 ];
 ```
 
-### HTTP client setup
+## HTTP Client Setup
+* Add a builder method for handling redirects in the HTTP client setup.
 
-* add follow redirects builder method
+## RestClientFactory
+* Implement body inclusion and argument resolving with the use of attributes.
+* Ensure that `*Exchange` path properties properly resolve relative URI paths.
 
+## Missing Tests
 
-### RestClientFactory
+- **Symfony Integration Tests**
+    - [ ] Test integration with Symfony Console Commands
+    - [ ] Test integration with Symfony Controllers
 
-* implement body inclusion and argument resolving with use of attributes
-* `*Exchange` path property should properly resolve relative URI path
+- **Laravel Integration Tests**
+    - [ ] Test integration with Laravel Artisan Commands
+    - [ ] Test integration with Laravel Controllers
+
+- **HTTP Client Follow Redirects Tests**
+    - [ ] Test the follow redirects builder method for the HTTP client setup
+
+- **Default Error Handlers Tests**
+    - [ ] Consider adding default error handlers to RestClient
+    - [ ] Test functionality of default error handlers
+
+- **RestClientFactory Body Inclusion and Argument Resolving Tests**
+    - [ ] Implement tests for including request bodies and resolving method arguments using attributes
+
+- **RestClientFactory `*Exchange` Path Resolution Tests**
+    - [ ] Test the proper resolution of relative URI paths for methods using `*Exchange` attributes
