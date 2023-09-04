@@ -82,7 +82,7 @@ $response->onStatus(404, function ($response) {
 });
 
 $response->onStatus(500, function ($response) {
-    throw a ServerErrorException('Server error');
+    throw new ServerErrorException('Server error');
 });
 ```
 
