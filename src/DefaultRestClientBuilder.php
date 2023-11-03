@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Brzuchal\RestClient;
 
@@ -11,13 +13,19 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+use function strtolower;
+
 /**
  * Default implementation of {@link RestClientBuilderInterface}
- *
- * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 final class DefaultRestClientBuilder implements RestClientBuilderInterface
 {
+    /**
+     * @param non-empty-string|null                          $baseUrl
+     * @param array<non-empty-string,mixed>|null             $defaultUriVariables
+     * @param array<non-empty-string,list<non-empty-string>> $defaultHeaders
+     * @param array<non-empty-string,mixed>                  $defaultContext
+     */
     public function __construct(
         private readonly HttpClientInterface|null $httpClient = null,
         private readonly SerializerInterface|null $serializer = null,
@@ -28,7 +36,6 @@ final class DefaultRestClientBuilder implements RestClientBuilderInterface
     ) {
     }
 
-    /** @inheritdoc */
     public function baseUrl(string $url): static
     {
         $this->baseUrl = $url;
@@ -51,18 +58,17 @@ final class DefaultRestClientBuilder implements RestClientBuilderInterface
     public function defaultHeaders(array $headers): static
     {
         foreach ($headers as $name => $values) {
-            $name = strtolower($name);
+            $name                          = strtolower($name);
             $this->defaultHeaders[$name] ??= [];
-            $this->defaultHeaders[$name] += $values;
+            $this->defaultHeaders[$name]  += $values;
         }
 
         return $this;
     }
 
-    /** @inheritdoc */
     public function defaultHeader(string $name, mixed $value): static
     {
-        $name = strtolower($name);
+        $name                          = strtolower($name);
         $this->defaultHeaders[$name] ??= [];
         $this->defaultHeaders[$name][] = $value;
 

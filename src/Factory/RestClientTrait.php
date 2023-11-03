@@ -1,16 +1,17 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Brzuchal\RestClient\Factory;
 
 use Brzuchal\RestClient\RestClientInterface;
 
-/**
- * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
- */
+// phpcs:disable
 trait RestClientTrait
+// phpcs:enable
 {
     public function __construct(
-        private RestClientInterface $restClient,
+        private readonly RestClientInterface $restClient,
     ) {
     }
 }

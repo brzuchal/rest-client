@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Brzuchal\RestClient;
 
@@ -10,9 +12,11 @@ use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+use function assert;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
-if (!InstalledVersions::satisfies(new VersionParser(), 'symfony/framework-bundle', '^6.3')) {
+if (! InstalledVersions::satisfies(new VersionParser(), 'symfony/framework-bundle', '^6.3')) {
     throw new LogicException(
         'Symfony Framework is missing or does not satisfy ^6.3 constraint. ' .
         'Try running "composer require symfony/framework-bundle:^6.3".',
@@ -21,8 +25,6 @@ if (!InstalledVersions::satisfies(new VersionParser(), 'symfony/framework-bundle
 
 /**
  * Symfony Bundle.
- *
- * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  *
  * @psalm-type ConfigClient = array{base_uri?:string,accept?:string,default_headers?:array}
  * @psalm-type Config = array{clients:array<non-empty-string,ConfigClient>}
@@ -49,11 +51,7 @@ final class RestClientBundle extends AbstractBundle
         ->end();
     }
 
-    /**
-     * @param Config $config
-     * @param ContainerConfigurator $container
-     * @param ContainerBuilder $builder
-     */
+    /** @param Config $config */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         foreach ($config['clients'] as $name => $values) {

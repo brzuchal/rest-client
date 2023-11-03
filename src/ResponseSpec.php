@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Brzuchal\RestClient;
 
@@ -13,8 +15,6 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
  * A mutable builder responsible for configuring interaction with {@link ResponseInterface}.
- *
- * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 final class ResponseSpec
 {
@@ -44,14 +44,17 @@ final class ResponseSpec
     }
 
     /**
-     * @template T
      * @param class-string<T> $type
+     *
      * @return T|null
+     *
      * @throws ClientExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      * @throws UnknownContentType
+     *
+     * @template T
      */
     public function toEntity(string $type): object|null
     {
@@ -60,14 +63,17 @@ final class ResponseSpec
     }
 
     /**
-     * @template T
      * @param class-string<T> $type
+     *
      * @return iterable<T>
+     *
      * @throws ClientExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      * @throws UnknownContentType
+     *
+     * @template T
      */
     public function toEntityCollection(string $type): iterable
     {
@@ -75,9 +81,7 @@ final class ResponseSpec
             ->exchange($this->response, $this->serializer);
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     */
+    /** @throws TransportExceptionInterface */
     public function is2xxStatus(): bool
     {
         return ResponseHelper::is2xxStatusCode($this->response);
@@ -87,10 +91,12 @@ final class ResponseSpec
      * Provide a function to map specific error status codes to an error handler.
      * <p>By default, if there are no matching status handlers, responses with
      * status codes &gt;= 400 wil throw a {@link RestClientResponseException}.
-     * @param int $statusCode to match responses with
-     * @psalm-type possible-object = object|null
+     *
+     * @param int                                                            $statusCode   to match responses with
      * @param Closure(ResponseInterface,SerializerInterface):possible-object $errorHandler handler that typically, though not necessarily,
      * throws an exception
+     *
+     * @psalm-type possible-object = object|null
      */
     public function onStatus(int $statusCode, Closure $errorHandler): self
     {

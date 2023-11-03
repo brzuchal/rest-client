@@ -1,0 +1,21 @@
+name: PR
+on:
+    pull_request:
+
+jobs:
+    triage:
+        name: Labels
+        permissions:
+            contents: read
+            pull-requests: write
+        runs-on: [ubuntu-latest]
+        steps:
+            - uses: actions/labeler@v4
+              with:
+                  sync-labels: true
+                  repo-token: ${{ secrets.GITHUB_TOKEN }}
+    add-reviews:
+        name: Reviewers and assign
+        runs-on: [ubuntu-latest]
+        steps:
+            - uses: kentaro-m/auto-assign-action@v1.2.4

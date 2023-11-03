@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Brzuchal\RestClient;
 
@@ -9,10 +11,12 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
+use function array_key_exists;
+use function explode;
+use function str_starts_with;
+
 /**
  * Helper class containing a utility functions to interact with {@link ResponseInterface}
- *
- * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 final class ResponseHelper
 {
@@ -28,7 +32,7 @@ final class ResponseHelper
     public static function extractFormatFromResponse(ResponseInterface $response): string
     {
         $headers = $response->getHeaders();
-        if (!array_key_exists('content-type', $headers)) {
+        if (! array_key_exists('content-type', $headers)) {
             throw new UnknownContentType();
         }
 
@@ -39,9 +43,6 @@ final class ResponseHelper
 
     /**
      * Extracts a format for deserialization from {@code Content-Type} header.
-     *
-     * @param string $contentType
-     * @return string|null
      */
     public static function extractFormat(string $contentType): string|null
     {
@@ -50,7 +51,7 @@ final class ResponseHelper
         }
 
         $mimeTypes = new MimeTypes();
-        $mimeType = explode(';', $contentType, 2)[0];
+        $mimeType  = explode(';', $contentType, 2)[0];
 
         return $mimeTypes->getExtensions($mimeType)[0] ?? null;
     }
