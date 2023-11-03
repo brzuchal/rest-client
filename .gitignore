@@ -4,7 +4,6 @@
 /.phpcs-cache
 /.phpunit.result.cache
 /phpcs.xml
-/phpstan.neon
 /phpunit.xml
 /psalm.xml
 /composer.lock
