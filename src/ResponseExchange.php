@@ -9,6 +9,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 interface ResponseExchange
 {
+    /** @param array<non-empty-string,mixed> $context */
     public function exchange(
         ResponseInterface $response,
         SerializerInterface $serializer,

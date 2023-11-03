@@ -17,6 +17,12 @@ use function str_starts_with;
  */
 final class DefaultRestClient implements RestClientInterface
 {
+    /**
+     * @param non-empty-string|null                          $baseUrl
+     * @param array<non-empty-string,mixed>|null             $defaultUriVariables
+     * @param array<non-empty-string,list<non-empty-string>> $defaultHeaders
+     * @param array<non-empty-string,mixed>                  $defaultContext
+     */
     public function __construct(
         private readonly HttpClientInterface $httpClient,
         private readonly SerializerInterface $serializer,

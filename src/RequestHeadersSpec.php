@@ -18,9 +18,15 @@ use function implode;
  */
 class RequestHeadersSpec
 {
+    /** @var array<non-empty-string,list<non-empty-string>> */
     protected array $headers;
     protected UriFactory $uriFactory;
 
+    /**
+     * @param non-empty-string                               $method
+     * @param array<non-empty-string,list<non-empty-string>> $defaultHeaders
+     * @param array<non-empty-string,mixed>                  $defaultContext
+     */
     public function __construct(
         protected readonly string $method,
         protected HttpClientInterface $httpClient,
@@ -36,6 +42,9 @@ class RequestHeadersSpec
     /**
      * Specify a URI for the request using the URI template and list of variables if required.
      * This method is mutually exclusive to {@link self::uriFactory()}.
+     *
+     * @param non-empty-string|null         $uri
+     * @param array<non-empty-string,mixed> $uriVariables
      *
      * @return $this
      */
@@ -65,6 +74,8 @@ class RequestHeadersSpec
      * Set the list of acceptable media types, as
      * specified by the {@code Accept} header.
      *
+     * @param list<non-empty-string> $acceptableMediaTypes
+     *
      * @return $this
      */
     public function accept(string ...$acceptableMediaTypes): static
@@ -77,6 +88,8 @@ class RequestHeadersSpec
     /**
      * Set the list of acceptable charsets, as specified
      * by the {@code Accept-Charset} header.
+     *
+     * @param list<non-empty-string> $acceptableCharsets
      *
      * @return $this
      */
@@ -104,6 +117,8 @@ class RequestHeadersSpec
     /**
      * Set the values of the {@code If-None-Match} header.
      *
+     * @param list<non-empty-string> $ifNoneMatches
+     *
      * @return $this
      */
     public function ifNoneMatch(string ...$ifNoneMatches): static
@@ -115,6 +130,9 @@ class RequestHeadersSpec
 
     /**
      * Add the given, single header value under the given name.
+     *
+     * @param non-empty-string       $name
+     * @param list<non-empty-string> $values
      *
      * @return $this
      */

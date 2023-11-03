@@ -8,7 +8,9 @@ namespace Brzuchal\RestClient;
  * Client to perform HTTP requests, exposing a fluent, synchronous API over
  * underlying HTTP client.
  */
+// phpcs:disable
 interface RestClientInterface
+// phpcs:enable
 {
     /**
      * Start building an HTTP GET request.

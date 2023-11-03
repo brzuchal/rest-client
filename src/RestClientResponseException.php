@@ -7,6 +7,7 @@ namespace Brzuchal\RestClient;
 use Exception;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
+// phpcs:disable
 final class RestClientResponseException extends Exception
 {
     public function __construct(

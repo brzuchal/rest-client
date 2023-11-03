@@ -6,10 +6,12 @@ namespace Brzuchal\RestClient\Factory;
 
 use Brzuchal\RestClient\RestClientInterface;
 
+// phpcs:disable
 trait RestClientTrait
+// phpcs:enable
 {
     public function __construct(
-        private RestClientInterface $restClient,
+        private readonly RestClientInterface $restClient,
     ) {
     }
 }

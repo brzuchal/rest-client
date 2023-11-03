@@ -89,7 +89,7 @@ final class RestClientFactory
         };
         $parameterMap = [];
         foreach ($reflectionMethod->getParameters() as $parameterReflection) {
-            $parameterMap[$parameterReflection->name] = "'{$parameterReflection->name}' => \${$parameterReflection->name}";
+            $parameterMap[$parameterReflection->name] = "'" . $parameterReflection->name . "' => \$" . $parameterReflection->name;
         }
 
         $uriVariablesParameter = empty($parameterMap) ? '' : ', [' . implode(', ', $parameterMap) . ']';
@@ -99,11 +99,11 @@ final class RestClientFactory
         $returns               = ! in_array($reflectionReturnType->getName(), ['void', 'never'], true);
         $methodGenerator->setBody(
             ($returns ? 'return ' : '') .
-            "\$this->restClient->{$method}('{$info->uri}'" . $uriVariablesParameter . ")\n" .
-            ($info->acceptableMediaType ? "->accept('{$info->acceptableMediaType}')\n" : '') .
-            ($info->acceptableCharset ? "->acceptCharset('{$info->acceptableCharset}')\n" : '') .
+            '$this->restClient->' . $method . "('" . $info->uri . "'" . $uriVariablesParameter . ")\n" .
+            ($info->acceptableMediaType ? "->accept('" . $info->acceptableMediaType . "')\n" : '') .
+            ($info->acceptableCharset ? "->acceptCharset('" . $info->acceptableCharset . "')\n" : '') .
             "->retrieve()\n" .
-            ($returns ? "->{$entityMethod}(\\{$returnType}::class);\n" : "->is2xxStatus();\n"),
+            ($returns ? '->' . $entityMethod . '(\\' . $returnType . "::class);\n" : "->is2xxStatus();\n"),
         );
         $methodGenerator->setInterface(false);
 

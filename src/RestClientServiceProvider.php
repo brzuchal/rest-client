@@ -39,6 +39,10 @@ final class RestClientServiceProvider extends ServiceProvider
         return __DIR__ . '/../config/laravel.php';
     }
 
+    /**
+     * @param non-empty-string              $name
+     * @param array<non-empty-string,mixed> $config
+     */
     protected function registerClient(string $name, array $config): void
     {
         $id = 'rest_client.' . $name;

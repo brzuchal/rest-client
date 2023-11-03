@@ -7,10 +7,14 @@ namespace Brzuchal\RestClient;
 /**
  * A mutable builder for creating a {@link RestClientInterface} instances.
  */
+// phpcs:disable
 interface RestClientBuilderInterface
+// phpcs:enable
 {
     /**
      * Specify a base URI for all requests using the URI template.
+     *
+     * @param non-empty-string $url
      *
      * @return $this
      */
@@ -19,7 +23,7 @@ interface RestClientBuilderInterface
     /**
      * Specify a base URI template list of variables.
      *
-     * @param array $uriVariables
+     * @param array<non-empty-string,mixed> $uriVariables
      *
      * @return $this
      */
@@ -28,7 +32,7 @@ interface RestClientBuilderInterface
     /**
      * Configure default headers common for all requests send.
      *
-     * @param string[]|string[][] $headers
+     * @param array<non-empty-string,list<non-empty-string>> $headers
      *
      * @return $this
      */
@@ -37,6 +41,9 @@ interface RestClientBuilderInterface
     /**
      * Configure default header by name common for all requests send.
      *
+     * @param non-empty-string $name
+     * @param non-empty-string $value
+     *
      * @return $this
      */
     public function defaultHeader(string $name, string $value): static;
@@ -44,7 +51,7 @@ interface RestClientBuilderInterface
     /**
      * Configure default serialization context to apply on de-/serialization.
      *
-     * @param array $context
+     * @param array<non-empty-string,mixed> $context
      *
      * @return $this
      */

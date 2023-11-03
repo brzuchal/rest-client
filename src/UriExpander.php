@@ -10,10 +10,16 @@ use function str_replace;
 
 final class UriExpander
 {
-    public function __construct(private string $uri)
+    /** @param non-empty-string $uri */
+    public function __construct(private readonly string $uri)
     {
     }
 
+    /**
+     * @param array<string,mixed> $uriVariables
+     *
+     * @return non-empty-string
+     */
     public function expand(array $uriVariables): string
     {
         preg_match_all('~\{(?<variable>[^}]*)}~', $this->uri, $matches);

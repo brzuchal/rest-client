@@ -31,7 +31,7 @@ final class DefaultResponseExchange implements ResponseExchange
     }
 
     /**
-     * @param array $context
+     * @param array<string,mixed> $context
      *
      * @throws ClientExceptionInterface
      * @throws RedirectionExceptionInterface
