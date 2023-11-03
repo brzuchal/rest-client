@@ -59,11 +59,11 @@ jobs:
 
             -   run: mkdir -p report/phpunit
                 if: success() || failure()
-            -   run: composer exec -- phpunit --testsuite tests --colors=always  --log-junit=report/phpunit/junit-${{ matrix.php }}-${{ matrix.dependency-versions }}.xml
+            -   run: composer exec -- phpunit --testsuite tests --colors=always  #--log-junit=report/phpunit/junit-${{ matrix.php }}-${{ matrix.dependency-versions }}.xml
                 if: success() || failure()
-            -   name: Publish Test Results
-                uses: EnricoMi/publish-unit-test-result-action/composite@v2
-                if: success() || failure()
-                with:
-                    check_name: "PHPUnit (${{ matrix.php }} with ${{ matrix.dependency-versions }} dependencies)"
-                    junit_files: "report/phpunit/**/*.xml"
+#            -   name: Publish Test Results
+#                uses: EnricoMi/publish-unit-test-result-action/composite@v2
+#                if: success() || failure()
+#                with:
+#                    check_name: "PHPUnit (${{ matrix.php }} with ${{ matrix.dependency-versions }} dependencies)"
+#                    junit_files: "report/phpunit/**/*.xml"
