@@ -27,7 +27,8 @@
     "orchestra/testbench": "^8",
     "phpunit/phpunit": "^10",
     "phpstan/phpstan": "^1",
-    "vimeo/psalm": "^5"
+    "vimeo/psalm": "^5",
+    "doctrine/coding-standard": "^12.0"
   },
   "autoload": {
     "psr-4": {
@@ -45,6 +46,11 @@
       "providers": [
         "Brzuchal\\RestClient\\RestClientServiceProvider"
       ]
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   }
 }

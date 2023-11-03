@@ -1,17 +1,16 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Brzuchal\RestClient;
 
 use Exception;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-/**
- * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
- */
 final class RestClientResponseException extends Exception
 {
     public function __construct(
-        public readonly ResponseInterface $response
+        public readonly ResponseInterface $response,
     ) {
         parent::__construct();
     }

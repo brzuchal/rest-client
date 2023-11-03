@@ -1,39 +1,40 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Brzuchal\RestClient;
 
 use Closure;
+use GuzzleHttp\UriTemplate\UriTemplate;
+use LogicException;
 
-/**
- * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
- */
+use function class_exists;
+use function str_contains;
+
 final class UriFactory
 {
     public static function create(
         string|null $uri = null,
         array|object|null $uriVariables = null,
     ): self {
-        if ($uri === null || !str_contains($uri, '{')) {
-            return new self(fn () => $uri ?? '/');
+        if ($uri === null || ! str_contains($uri, '{')) {
+            return new self(static fn () => $uri ?? '/');
         }
 
         if (UriExpander::supports($uri)) {
-            return new self(fn () => (new UriExpander($uri))->expand($uriVariables));
+            return new self(static fn () => (new UriExpander($uri))->expand($uriVariables));
         }
 
         $expander = self::createExpanderFromPopularVendors();
 
-        return new self(fn () => $expander($uri, $uriVariables));
+        return new self(static fn () => $expander($uri, $uriVariables));
     }
 
-
-    /**
-     * @return Closure(string $url, array $vars): string
-     */
+    /** @return Closure(string $url, array $vars): string */
     private static function createExpanderFromPopularVendors(): Closure
     {
-        if (class_exists(\GuzzleHttp\UriTemplate\UriTemplate::class)) {
-            return \GuzzleHttp\UriTemplate\UriTemplate::expand(...);
+        if (class_exists(UriTemplate::class)) {
+            return UriTemplate::expand(...);
         }
 
         if (class_exists(\League\Uri\UriTemplate::class)) {
@@ -44,7 +45,7 @@ final class UriFactory
             return (new \Rize\UriTemplate())->expand(...);
         }
 
-        throw new \LogicException('Support for URI template requires a vendor to expand the URI. Run "composer require guzzlehttp/uri-template" or pass your own expander \Closure implementation.');
+        throw new LogicException('Support for URI template requires a vendor to expand the URI. Run "composer require guzzlehttp/uri-template" or pass your own expander \Closure implementation.');
     }
 
     public function __construct(
@@ -54,6 +55,6 @@ final class UriFactory
 
     public function render(): string
     {
-        return $this->uriFunction->call($this);
+        return ($this->uriFunction)();
     }
 }

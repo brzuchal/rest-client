@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Brzuchal\RestClient;
 
@@ -8,8 +10,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 /**
  * A factory to instantiate the {@link DefaultRestClient}
  * and {@link DefaultRestClientBuilder} for the runtime.
- *
- * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 final class RestClient
 {

@@ -1,11 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Brzuchal\RestClient\Attributes;
 
-/**
- * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
- */
-#[\Attribute(\Attribute::TARGET_METHOD)]
+use Attribute;
+
+#[Attribute(Attribute::TARGET_METHOD)]
 class EntityCollectionExchange extends EntityExchange
 {
     public function __construct(

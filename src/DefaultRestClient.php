@@ -1,14 +1,19 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Brzuchal\RestClient;
 
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+use function array_merge;
+use function ltrim;
+use function str_ends_with;
+use function str_starts_with;
+
 /**
  * Default implementation of {@link RestClientInterface}.
- *
- * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 final class DefaultRestClient implements RestClientInterface
 {
@@ -22,43 +27,36 @@ final class DefaultRestClient implements RestClientInterface
     ) {
     }
 
-    /** @inheritdoc */
     public function get(string|null $uri = null, array|null $uriVariables = null): RequestHeadersSpec
     {
         return $this->createHeadersSpec('GET', $this->createUriFactory($uri, $uriVariables));
     }
 
-    /** @inheritdoc */
     public function head(string|null $uri = null, array|null $uriVariables = null): RequestHeadersSpec
     {
         return $this->createHeadersSpec('HEAD', $this->createUriFactory($uri, $uriVariables));
     }
 
-    /** @inheritdoc */
     public function post(string|null $uri = null, array|null $uriVariables = null): RequestBodyHeadersSpec
     {
         return $this->createBodyHeadersSpec('POST', $this->createUriFactory($uri, $uriVariables));
     }
 
-    /** @inheritdoc */
     public function put(string|null $uri = null, array|null $uriVariables = null): RequestBodyHeadersSpec
     {
         return $this->createBodyHeadersSpec('PUT', $this->createUriFactory($uri, $uriVariables));
     }
 
-    /** @inheritdoc */
     public function patch(string|null $uri = null, array|null $uriVariables = null): RequestBodyHeadersSpec
     {
         return $this->createBodyHeadersSpec('PATCH', $this->createUriFactory($uri, $uriVariables));
     }
 
-    /** @inheritdoc */
     public function delete(string|null $uri = null, array|null $uriVariables = null): RequestHeadersSpec
     {
         return $this->createHeadersSpec('DELETE', $this->createUriFactory($uri, $uriVariables));
     }
 
-    /** @inheritdoc */
     public function options(string|null $uri = null, array|null $uriVariables = null): RequestHeadersSpec
     {
         return $this->createHeadersSpec('OPTIONS', $this->createUriFactory($uri, $uriVariables));

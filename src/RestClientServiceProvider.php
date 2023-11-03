@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Brzuchal\RestClient;
 
@@ -7,7 +9,9 @@ use Composer\Semver\VersionParser;
 use Illuminate\Support\ServiceProvider;
 use LogicException;
 
-if (!InstalledVersions::satisfies(new VersionParser(), 'laravel/framework', '^10')) {
+use function config;
+
+if (! InstalledVersions::satisfies(new VersionParser(), 'laravel/framework', '^10')) {
     throw new LogicException(
         'Laravel Framework is missing or does not satisfy ^10 constraint. ' .
         'Try running "composer require laravel/framework:^10".',
@@ -16,8 +20,6 @@ if (!InstalledVersions::satisfies(new VersionParser(), 'laravel/framework', '^10
 
 /**
  * Laravel ServiceProvider.
- *
- * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 final class RestClientServiceProvider extends ServiceProvider
 {
@@ -40,6 +42,6 @@ final class RestClientServiceProvider extends ServiceProvider
     protected function registerClient(string $name, array $config): void
     {
         $id = 'rest_client.' . $name;
-        $this->app->singleton($id, fn () => RestClient::create($config['base_uri']));
+        $this->app->singleton($id, static fn () => RestClient::create($config['base_uri']));
     }
 }

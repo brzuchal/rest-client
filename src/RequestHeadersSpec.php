@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Brzuchal\RestClient;
 
@@ -9,10 +11,10 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
+use function implode;
+
 /**
  * A mutable builder responsible for configuring request without body.
- *
- * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 class RequestHeadersSpec
 {
@@ -28,15 +30,13 @@ class RequestHeadersSpec
         protected array $defaultContext = [],
     ) {
         $this->uriFactory = $uriFactory ?? UriFactory::create();
-        $this->headers = $defaultHeaders;
+        $this->headers    = $defaultHeaders;
     }
 
     /**
      * Specify a URI for the request using the URI template and list of variables if required.
      * This method is mutually exclusive to {@link self::uriFactory()}.
      *
-     * @param string|null $uri
-     * @param array|null $uriVariables
      * @return $this
      */
     public function uri(string|null $uri = null, array|null $uriVariables = null): static
@@ -51,6 +51,7 @@ class RequestHeadersSpec
      * This method is mutually exclusive to {@link self::uri()}.
      *
      * @param Closure():string $closure
+     *
      * @return $this
      */
     public function uriFactory(Closure $closure): static
@@ -66,7 +67,7 @@ class RequestHeadersSpec
      *
      * @return $this
      */
-    public function accept(string... $acceptableMediaTypes): static
+    public function accept(string ...$acceptableMediaTypes): static
     {
         $this->headers['accept'] = $acceptableMediaTypes;
 
@@ -79,7 +80,7 @@ class RequestHeadersSpec
      *
      * @return $this
      */
-    public function acceptCharset(string... $acceptableCharsets): static
+    public function acceptCharset(string ...$acceptableCharsets): static
     {
         $this->headers['accept-charset'] = $acceptableCharsets;
 
@@ -105,9 +106,9 @@ class RequestHeadersSpec
      *
      * @return $this
      */
-    public function ifNoneMatch(string... $ifNoneMatches): static
+    public function ifNoneMatch(string ...$ifNoneMatches): static
     {
-        $this->headers['if-modified-since'] = '"'. implode('", "', $ifNoneMatches) . '"';
+        $this->headers['if-modified-since'] = '"' . implode('", "', $ifNoneMatches) . '"';
 
         return $this;
     }
@@ -115,14 +116,12 @@ class RequestHeadersSpec
     /**
      * Add the given, single header value under the given name.
      *
-     * @param string $name
-     * @param string ...$values
      * @return $this
      */
-    public function header(string $name, string... $values): static
+    public function header(string $name, string ...$values): static
     {
         $this->headers[$name] ??= [];
-        $this->headers[$name] += $values;
+        $this->headers[$name]  += $values;
 
         return $this;
     }
@@ -152,9 +151,7 @@ class RequestHeadersSpec
         return $closure($this->request(), $this->serializer, $this->defaultContext);
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     */
+    /** @throws TransportExceptionInterface */
     protected function request(): ResponseInterface
     {
         return $this->httpClient->request(

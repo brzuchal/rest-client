@@ -1,0 +1,35 @@
+name: PR
+on:
+    pull_request:
+
+jobs:
+    triage:
+        name: Labels
+        permissions:
+            contents: read
+            pull-requests: write
+        runs-on: [ self-hosted ]
+        steps:
+            - uses: actions/labeler@v4
+              with:
+                  sync-labels: true
+                  repo-token: ${{ secrets.GITHUB_TOKEN }}
+    add-reviews:
+        name: Reviewers and assign
+        runs-on: [ self-hosted ]
+        steps:
+            - uses: kentaro-m/auto-assign-action@v1.2.4
+
+#    description:
+#        name: Description from CHANGELOG
+#        runs-on: [ self-hosted ]
+#        steps:
+#            -   uses: actions/checkout@v3
+#            -   id: changelog
+#                uses: coditory/changelog-parser@v1
+#                with:
+#                    version: Unreleased
+#            -   uses: kt3k/update-pr-description@v1.0.1
+#                with:
+#                    pr_body: ${{ steps.changelog.outputs.description }}
+#                    github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,8 @@
+doc:
+- doc/**/*
+- example/**/*
+- README.md
+changelog:
+- CHANGELOG.md
+composer-dependencies:
+- composer.json

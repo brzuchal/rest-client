@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Brzuchal\RestClient;
 
@@ -7,8 +9,6 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
  * A mutable builder responsible for configuring request containing body.
- *
- * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 final class RequestBodyHeadersSpec extends RequestHeadersSpec
 {
@@ -18,6 +18,7 @@ final class RequestBodyHeadersSpec extends RequestHeadersSpec
      * Set the {@code Content-Type} of the body to be specified in the headers.
      *
      * @param string $contentType the content type
+     *
      * @return $this
      */
     public function contentType(string $contentType): self
@@ -31,6 +32,7 @@ final class RequestBodyHeadersSpec extends RequestHeadersSpec
      * Set the body of the request to the given {@code object}.
      *
      * @param object $body the body of the response
+     *
      * @return $this
      */
     public function body(object $body): self
@@ -48,7 +50,7 @@ final class RequestBodyHeadersSpec extends RequestHeadersSpec
     protected function request(): ResponseInterface
     {
         if (empty($this->headers['content-type'])) {
-            $format = 'json';
+            $format                        = 'json';
             $this->headers['content-type'] = 'application/json';
         } else {
             $format = ResponseHelper::extractFormat($this->headers['content-type']);
@@ -63,7 +65,7 @@ final class RequestBodyHeadersSpec extends RequestHeadersSpec
                     data: $this->body,
                     format: $format,
                     context: $this->defaultContext,
-                )
+                ),
             ],
         );
     }
