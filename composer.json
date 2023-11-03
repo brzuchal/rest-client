@@ -20,7 +20,7 @@
   },
   "require-dev": {
     "laminas/laminas-code": "^4",
-    "laravel/framework": "^10",
+    "laravel/support": "^9",
     "symfony/mime": "^6.3",
     "symfony/validator": "^6.3",
     "symfony/framework-bundle": "^6.3",
