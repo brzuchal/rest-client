@@ -20,7 +20,7 @@
   },
   "require-dev": {
     "laminas/laminas-code": "^4",
-    "laravel/support": "^9",
+    "illuminate/support": "^9",
     "symfony/mime": "^6.3",
     "symfony/validator": "^6.3",
     "symfony/framework-bundle": "^6.3",
@@ -45,6 +45,11 @@
       "providers": [
         "Brzuchal\\RestClient\\RestClientServiceProvider"
       ]
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   }
 }
