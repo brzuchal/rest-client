@@ -4,19 +4,9 @@ declare(strict_types=1);
 
 namespace Brzuchal\RestClient;
 
-use Composer\InstalledVersions;
-use Composer\Semver\VersionParser;
 use Illuminate\Support\ServiceProvider;
-use LogicException;
 
 use function config;
-
-if (! InstalledVersions::satisfies(new VersionParser(), 'laravel/framework', '^10')) {
-    throw new LogicException(
-        'Laravel Framework is missing or does not satisfy ^10 constraint. ' .
-        'Try running "composer require laravel/framework:^10".',
-    );
-}
 
 /**
  * Laravel ServiceProvider.
