@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Brzuchal\RestClient;
 
-use Composer\InstalledVersions;
-use Composer\Semver\VersionParser;
-use LogicException;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -15,13 +12,6 @@ use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 use function assert;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
-
-if (! InstalledVersions::satisfies(new VersionParser(), 'symfony/framework-bundle', '^6.3')) {
-    throw new LogicException(
-        'Symfony Framework is missing or does not satisfy ^6.3 constraint. ' .
-        'Try running "composer require symfony/framework-bundle:^6.3".',
-    );
-}
 
 /**
  * Symfony Bundle.
