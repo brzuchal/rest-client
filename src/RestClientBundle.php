@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 use function assert;
+use function sprintf;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
 /**
@@ -66,17 +67,17 @@ final class RestClientBundle extends AbstractBundle
 
             $baseUriParam = $id . '.base_uri';
             $container->parameters()->set($baseUriParam, $values['base_uri']);
-            $httpClient = !empty($values['http_client']) ? new Reference($values['http_client']) : null;
-            $serializer = !empty($values['serializer']) ? new Reference($values['serializer']) : null;
+            $httpClient    = ! empty($values['http_client']) ? new Reference($values['http_client']) : null;
+            $serializer    = ! empty($values['serializer']) ? new Reference($values['serializer']) : null;
             $clientService = $container->services()->set($id, RestClientInterface::class);
 
-            $builderId = $id . '.builder';
+            $builderId      = $id . '.builder';
             $builderService = $container->services()->set($builderId, RestClientBuilderInterface::class);
             $builderService->factory([RestClient::class, 'builder'])
                 ->arg(0, $httpClient)
                 ->arg(1, $serializer);
 
-            if (!empty($values['base_uri'])) {
+            if (! empty($values['base_uri'])) {
                 $builderService->call('baseUrl', [param($baseUriParam)]);
             }
 
