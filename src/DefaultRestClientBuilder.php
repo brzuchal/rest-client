@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+use function is_string;
 use function strtolower;
 
 /**
@@ -60,7 +61,11 @@ final class DefaultRestClientBuilder implements RestClientBuilderInterface
         foreach ($headers as $name => $values) {
             $name                          = strtolower($name);
             $this->defaultHeaders[$name] ??= [];
-            $this->defaultHeaders[$name]  += $values;
+            if (is_string($values)) {
+                $this->defaultHeaders[$name][] = $values;
+            } else {
+                $this->defaultHeaders[$name][] += $values;
+            }
         }
 
         return $this;
