@@ -2,6 +2,7 @@
 
 namespace Brzuchal\RestClient\Tests;
 
+use Brzuchal\RestClient\RestClientBuilderInterface;
 use Brzuchal\RestClient\RestClientBundle;
 use Brzuchal\RestClient\RestClient;
 use Brzuchal\RestClient\RestClientInterface;
@@ -12,16 +13,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfiguration
 
 class RestClientBundleTest extends TestCase
 {
-//    public function testRestClientBuilderDefinition(): void
-//    {
-//        $container = self::getContainerBuilder();
-//
-//        $this->assertTrue($container->hasDefinition('rest_client.builder'));
-//        $definition = $container->getDefinition('rest_client.builder');
-//        $this->assertEquals(DefaultRestClientBuilder::class, $definition->getClass());
-//        $this->assertEquals([RestClient::class, 'builder'], $definition->getFactory());
-//    }
-
     public function testNamedRestClientDefinition(): void
     {
         $container = self::getContainerBuilder([
@@ -38,6 +29,11 @@ class RestClientBundleTest extends TestCase
         $this->assertEquals(RestClientInterface::class, $definition->getClass());
         $this->assertEquals([RestClient::class, 'create'], $definition->getFactory());
         $this->assertEquals('%rest_client.test.base_uri%', $definition->getArgument(0));
+
+        $this->assertTrue($container->hasDefinition('rest_client.test.builder'));
+        $definition = $container->getDefinition('rest_client.test.builder');
+        $this->assertEquals(RestClientBuilderInterface::class, $definition->getClass());
+        $this->assertEquals([RestClient::class, 'builder'], $definition->getFactory());
     }
 
     protected static function getContainerBuilder(array $config = []): ContainerBuilder
