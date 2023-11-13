@@ -64,7 +64,7 @@ final class DefaultRestClientBuilder implements RestClientBuilderInterface
             if (is_string($values)) {
                 $this->defaultHeaders[$name][] = $values;
             } else {
-                $this->defaultHeaders[$name][] += $values;
+                $this->defaultHeaders[$name] += $values;
             }
         }
 
