@@ -7,9 +7,7 @@ namespace Brzuchal\RestClient;
 /**
  * A mutable builder for creating a {@link RestClientInterface} instances.
  */
-// phpcs:disable
 interface RestClientBuilderInterface
-// phpcs:enable
 {
     /**
      * Specify a base URI for all requests using the URI template.
