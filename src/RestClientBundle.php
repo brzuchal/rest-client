@@ -70,7 +70,7 @@ final class RestClientBundle extends AbstractBundle
             }
 
             $baseUriParam = $id . '.base_uri';
-            $container->parameters()->set($baseUriParam, $values['base_uri']);
+            $container->parameters()->set($baseUriParam, $values['base_uri'] ?? null);
             $httpClient    = ! empty($values['http_client']) ? new Reference($values['http_client']) : null;
             $serializer    = ! empty($values['serializer']) ? new Reference($values['serializer']) : null;
             $clientService = $container->services()->set($id, RestClientInterface::class);
