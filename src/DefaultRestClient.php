@@ -33,41 +33,49 @@ final class DefaultRestClient implements RestClientInterface
     ) {
     }
 
+    /** @throws ExpectedBaseUri */
     public function get(string|null $uri = null, array|null $uriVariables = null): RequestHeadersSpec
     {
         return $this->createHeadersSpec('GET', $this->createUriFactory($uri, $uriVariables));
     }
 
+    /** @throws ExpectedBaseUri */
     public function head(string|null $uri = null, array|null $uriVariables = null): RequestHeadersSpec
     {
         return $this->createHeadersSpec('HEAD', $this->createUriFactory($uri, $uriVariables));
     }
 
+    /** @throws ExpectedBaseUri */
     public function post(string|null $uri = null, array|null $uriVariables = null): RequestBodyHeadersSpec
     {
         return $this->createBodyHeadersSpec('POST', $this->createUriFactory($uri, $uriVariables));
     }
 
+    /** @throws ExpectedBaseUri */
     public function put(string|null $uri = null, array|null $uriVariables = null): RequestBodyHeadersSpec
     {
         return $this->createBodyHeadersSpec('PUT', $this->createUriFactory($uri, $uriVariables));
     }
 
+    /** @throws ExpectedBaseUri */
     public function patch(string|null $uri = null, array|null $uriVariables = null): RequestBodyHeadersSpec
     {
         return $this->createBodyHeadersSpec('PATCH', $this->createUriFactory($uri, $uriVariables));
     }
 
+    /** @throws ExpectedBaseUri */
     public function delete(string|null $uri = null, array|null $uriVariables = null): RequestHeadersSpec
     {
         return $this->createHeadersSpec('DELETE', $this->createUriFactory($uri, $uriVariables));
     }
 
+    /** @throws ExpectedBaseUri */
     public function options(string|null $uri = null, array|null $uriVariables = null): RequestHeadersSpec
     {
         return $this->createHeadersSpec('OPTIONS', $this->createUriFactory($uri, $uriVariables));
     }
 
+    /** @param non-empty-string $method */
     protected function createHeadersSpec(string $method, UriFactory $uriFactory): RequestHeadersSpec
     {
         return new RequestHeadersSpec(
@@ -80,6 +88,7 @@ final class DefaultRestClient implements RestClientInterface
         );
     }
 
+    /** @param non-empty-string $method */
     protected function createBodyHeadersSpec(string $method, UriFactory $uriFactory): RequestBodyHeadersSpec
     {
         return new RequestBodyHeadersSpec(
@@ -92,10 +101,15 @@ final class DefaultRestClient implements RestClientInterface
         );
     }
 
+    /** @throws ExpectedBaseUri */
     protected function createUriFactory(string|null $uri, array|null $uriVariables): UriFactory
     {
-        if ($this->baseUrl) {
-            if (str_ends_with($this->baseUrl, '/') && str_starts_with($uri, '/')) {
+        if ($this->baseUrl === null && $uri === null) {
+            throw new ExpectedBaseUri('Not passing Uri if no baseUri defined on client is not allowed');
+        }
+
+        if (! empty($this->baseUrl)) {
+            if (str_ends_with($this->baseUrl, '/') && $uri && str_starts_with($uri, '/')) {
                 $uri = ltrim($uri, '/');
             }
 

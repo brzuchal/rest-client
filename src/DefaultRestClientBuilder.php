@@ -37,7 +37,7 @@ final class DefaultRestClientBuilder implements RestClientBuilderInterface
     ) {
     }
 
-    public function baseUrl(string $url): static
+    public function baseUrl(string|null $url): static
     {
         $this->baseUrl = $url;
 
