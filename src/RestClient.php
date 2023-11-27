@@ -13,8 +13,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 final class RestClient
 {
+    /** @param non-empty-string|null $baseUri */
     public static function create(
-        string $baseUri,
+        string|null $baseUri,
         HttpClientInterface|null $httpClient = null,
         SerializerInterface|null $serializer = null,
     ): RestClientInterface {

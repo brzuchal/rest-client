@@ -12,11 +12,11 @@ interface RestClientBuilderInterface
     /**
      * Specify a base URI for all requests using the URI template.
      *
-     * @param non-empty-string $url
+     * @param non-empty-string|null $url
      *
      * @return $this
      */
-    public function baseUrl(string $url): static;
+    public function baseUrl(string|null $url): static;
 
     /**
      * Specify a base URI template list of variables.
