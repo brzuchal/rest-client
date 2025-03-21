@@ -3,9 +3,9 @@
   "description": "A new synchronous HTTP REST client offering a fluent API with the infrastructure of Symfony HttpClient",
   "license": "MIT",
   "require": {
-    "symfony/http-client": "^6.3",
-    "symfony/property-access": "^6.3",
-    "symfony/serializer": "^6.3",
+    "symfony/http-client": "^6.3 || ^7",
+    "symfony/property-access": "^6.3 || ^7",
+    "symfony/serializer": "^6.3 || ^7",
     "psr/log": "^1|^2|^3"
   },
   "suggest": {
@@ -15,15 +15,15 @@
   "conflict": {
     "laminas/laminas-code": "<4",
     "laravel/framework": "<10",
-    "symfony/mime": "<6.3",
-    "symfony/framework-bundle": "<6.3"
+    "symfony/mime": "<6.3 || ^7",
+    "symfony/framework-bundle": "<6.3 || ^7"
   },
   "require-dev": {
     "laminas/laminas-code": "^4",
     "laravel/framework": "^10",
-    "symfony/mime": "^6.3",
-    "symfony/validator": "^6.3",
-    "symfony/framework-bundle": "^6.3",
+    "symfony/mime": "^6.3 || ^7",
+    "symfony/validator": "^6.3 || ^7",
+    "symfony/framework-bundle": "^6.3 || ^7",
     "orchestra/testbench": "^8",
     "phpunit/phpunit": "^10",
     "phpstan/phpstan": "^1",
